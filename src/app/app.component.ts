@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'AppFrontClientManagement';
+  private _title: string;
+  public get title() {
+    return this._title;
+  }
+  public set title(value) {
+    this._title = value;
+  }
+
+  constructor() {
+    this.title = 'Front para la administración de clientes';
+  }
+
 }
