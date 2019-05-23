@@ -4,13 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ManageClientComponent } from './manage-client/manage-client.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MewClientComponent } from './mew-client/mew-client.component';
+import { NewClientComponent } from './new-client/new-client.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ManageClientComponent,
-    MewClientComponent
+    NewClientComponent
   ],
   imports: [
     BrowserModule,

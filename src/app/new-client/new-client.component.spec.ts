@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MewClientComponent } from './mew-client.component';
+import { NewClientComponent } from './new-client.component';
 
-describe('MewClientComponent', () => {
-  let component: MewClientComponent;
-  let fixture: ComponentFixture<MewClientComponent>;
+describe('NewClientComponent', () => {
+  let component: NewClientComponent;
+  let fixture: ComponentFixture<NewClientComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MewClientComponent ]
+      declarations: [ NewClientComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MewClientComponent);
+    fixture = TestBed.createComponent(NewClientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
