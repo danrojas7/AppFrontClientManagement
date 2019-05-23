@@ -19,7 +19,7 @@ export class ClientManagementService {
   constructor(
     public _http: HttpClient
   ) {
-    this.urlServicioClientManagement = 'http://localhost:8080/client';
+    this.urlServicioClientManagement = 'http://localhost:8081/client';
   }
 
   addClient(client: Client): Observable<any> {
