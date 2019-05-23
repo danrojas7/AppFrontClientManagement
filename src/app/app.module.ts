@@ -1,20 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms'; // Se utiliza el routing 
 
 import { AppComponent } from './app.component';
 import { ManageClientComponent } from './manage-client/manage-client.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NewClientComponent } from './new-client/new-client.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ManageClientComponent,
-    NewClientComponent
+    ManageClientComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule,
+    FormsModule
   ],
   providers: [
   ],
