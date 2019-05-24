@@ -5,19 +5,24 @@
                 <div class="card-body dashboard-tabs p-0">
                     <ul class="nav nav-tabs px-4" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Actions</a>
+                            <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab"
+                                aria-controls="overview" aria-selected="true">Actions</a>
                         </li>
                     </ul>
                     <div class="tab-content py-0 px-0">
-                        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel"
+                            aria-labelledby="overview-tab">
                             <div class="d-flex flex-wrap justify-content-xl-between">
-                                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal" data-target="#clientModal" (click)="actionAddingClient()">
+                                <div
+                                    class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal"
+                                        data-target="#clientModal" (click)="actionAddingClient()">
                                         <i class="mdi mdi-account-plus icon-md mr-3 text-light"></i>
                                         New Client
                                     </button>
                                 </div>
-                                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <div
+                                    class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                     <button type="button" class="btn btn-primary btn-fw">
                                         <i class="mdi mdi-file-export icon-md mr-3 text-light"></i>
                                         Export
@@ -40,7 +45,8 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter shared key" aria-label="Enter shared key">
+                                    <input type="text" class="form-control" placeholder="Enter shared key"
+                                        aria-label="Enter shared key">
                                     <div class="input-group-append">
                                         <button class="btn btn-sm btn-primary" type="button">Search</button>
                                     </div>
@@ -54,9 +60,10 @@
                             </div>
                         </div>
                     </div>
-                    <p></p>
+                    <br>
+                    <br>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-hover table table-sm">
                             <thead>
                                 <tr>
                                     <th>Share Key</th>
@@ -73,8 +80,10 @@
                                     <td>{{client.businessId}}</td>
                                     <td>{{client.email}}</td>
                                     <td>{{client.phone}}</td>
-                                    <td>{{client.addedDate}}</td>
-                                    <td><button type="button" class="btn btn-light btn-sm" (click)="actionModifyingClient(client.sharedKey)" data-toggle="modal" data-target="#clientModal"><span
+                                    <td>{{client.addedDate | date:'dd/MM/yyyy hh:mm a'}}</td>
+                                    <td><button type="button" class="btn btn-light btn-sm"
+                                            (click)="actionModifyingClient(client.sharedKey)" data-toggle="modal"
+                                            data-target="#clientModal"><span
                                                 class=" mdi mdi-lead-pencil icon-md mr-1 text-primary"></span></button>
                                     </td>
                                 </tr>
@@ -87,7 +96,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="clientModalLabel" aria-hidden="true">
+<div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="clientModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -99,40 +109,54 @@
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
-                        <form id="formClient" #formClient="ngForm" class="forms-sample" (ngSubmit)="onSubmitFormClient();">
+                        <form id="formClient" #formClient="ngForm" class="forms-sample"
+                            (ngSubmit)="onSubmitFormClient();">
                             <div class="form-group row">
                                 <label for="inputUserSharedKey" class="col-sm-3 col-form-label">Shared Key</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="inputUserSharedKey" name="inputUserSharedKey" #inputUserSharedKey="ngModel" [(ngModel)]="currentClient.sharedKey" required class="form-control" placeholder="Shared Key" pattern="[a-z]+">
-                                    <span *ngIf="!inputUserSharedKey.valid && inputUserSharedKey.touched" class="badge badge-danger">SharedKey is invalid or empty</span>
+                                    <input type="text" id="inputUserSharedKey" name="inputUserSharedKey"
+                                        #inputUserSharedKey="ngModel" [(ngModel)]="currentClient.sharedKey" required
+                                        class="form-control" placeholder="Shared Key" pattern="[a-z]+">
+                                    <span *ngIf="!inputUserSharedKey.valid && inputUserSharedKey.touched"
+                                        class="badge badge-danger">SharedKey is invalid or empty</span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputUserName" class="col-sm-3 col-form-label">Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="inputUserName" name="inputUserName" #inputUserName="ngModel" [(ngModel)]="currentClient.businessId" required class="form-control" placeholder="Name" pattern="^[a-zA-Z\s]*$">
-                                    <span *ngIf="!inputUserName.valid && inputUserName.touched" class="badge badge-danger">Name Business
+                                    <input type="text" id="inputUserName" name="inputUserName" #inputUserName="ngModel"
+                                        [(ngModel)]="currentClient.businessId" required class="form-control"
+                                        placeholder="Name" pattern="^[a-zA-Z\s]*$">
+                                    <span *ngIf="!inputUserName.valid && inputUserName.touched"
+                                        class="badge badge-danger">Name Business
                                         is invalid or empty</span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="inputPhoneNumber" name="inputPhoneNumber" #inputPhoneNumber="ngModel" [(ngModel)]="currentClient.phone" required class="form-control" placeholder="Phone" pattern="[0-9]*">
-                                    <span *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched" class="badge badge-danger">Phone is
+                                    <input type="text" id="inputPhoneNumber" name="inputPhoneNumber"
+                                        #inputPhoneNumber="ngModel" [(ngModel)]="currentClient.phone" required
+                                        class="form-control" placeholder="Phone" pattern="[0-9]*">
+                                    <span *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched"
+                                        class="badge badge-danger">Phone is
                                         invalid or empty</span>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail" class="col-sm-3 col-form-label">E-mail</label>
                                 <div class="col-sm-9">
-                                    <input type="email" id="inputEmail" name="inputEmail" #inputEmail="ngModel" [(ngModel)]="currentClient.email" class="form-control" required placeholder="E-mail">
-                                    <span *ngIf="!inputEmail.valid && inputEmail.touched" class="badge badge-danger">E-mail is
+                                    <input type="email" id="inputEmail" name="inputEmail" #inputEmail="ngModel"
+                                        [(ngModel)]="currentClient.email" class="form-control" required
+                                        placeholder="E-mail">
+                                    <span *ngIf="!inputEmail.valid && inputEmail.touched"
+                                        class="badge badge-danger">E-mail is
                                         invalid or empty</span>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="btnCloseClientModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id="btnCloseClientModal" class="btn btn-secondary"
+                                    data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" [disabled]="!formClient.form.valid">Save
                                     changes</button>
                             </div>
@@ -144,8 +168,10 @@
     </div>
 </div>
 
-<button type="button" id="btnOpenNotModal" data-toggle="modal" data-target="#notificationModal" class="btn btn-primary" hidden>Open Notification Modal</button>
-<div id="notificationModal" #notificationModal class="modal modal-notification" data-target="#modal" tabindex="-1" role="dialog">
+<button type="button" id="btnOpenNotModal" data-toggle="modal" data-target="#notificationModal" class="btn btn-primary"
+    hidden>Open Notification Modal</button>
+<div id="notificationModal" #notificationModal class="modal modal-notification" data-target="#modal" tabindex="-1"
+    role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -158,7 +184,8 @@
                 <p *ngFor="let descrNot of descriptionNotification">{{descrNot}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnCloseNotModal" class="btn btn-secondary" data-dismiss="modal" (click)="funcHideNotificationModal();">Close</button>
+                <button type="button" id="btnCloseNotModal" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="funcHideNotificationModal();">Close</button>
             </div>
         </div>
     </div>
