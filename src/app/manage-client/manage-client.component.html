@@ -16,7 +16,7 @@
                                 <div
                                     class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                     <button type="button" class="btn btn-primary btn-fw" data-toggle="modal"
-                                        data-target="#clientModal" (click)="actionAddingClient()">
+                                        data-target="#clientModal" (click)="formClient.reset(); actionAddingClient();">
                                         <i class="mdi mdi-account-plus icon-md mr-3 text-light"></i>
                                         New Client
                                     </button>
@@ -161,7 +161,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" id="btnCloseClientModal" class="btn btn-secondary"
-                                    data-dismiss="modal" (click)="formClient.reset();">Close</button>
+                                    data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" [disabled]="!formClient.form.valid">Save
                                     changes</button>
                             </div>
