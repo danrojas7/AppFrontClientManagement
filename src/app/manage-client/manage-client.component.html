@@ -110,7 +110,7 @@
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
-                        <form class="needs-validation" novalidate id="formClient" #formClient="ngForm"
+                        <form class="needs-validation was-validated" novalidate id="formClient" #formClient="ngForm"
                             (ngSubmit)="onSubmitFormClient();">
                             <div class="form-group row">
                                 <label for="inputUserSharedKey" class="col-sm-3 col-form-label">Shared Key</label>
@@ -118,8 +118,12 @@
                                     <input type="text" id="inputUserSharedKey" name="inputUserSharedKey"
                                         #inputUserSharedKey="ngModel" [(ngModel)]="currentClient.sharedKey" required
                                         pattern="[a-z]+" class="form-control" placeholder="Shared Key">
-                                    <span *ngIf="!inputUserSharedKey.valid && inputUserSharedKey.touched"
-                                        class="badge badge-danger">SharedKey is invalid or empty</span>
+                                    <span
+                                        *ngIf="!inputUserSharedKey.valid && inputUserSharedKey.touched && inputUserSharedKey.errors && inputUserSharedKey.errors.required"
+                                        class="invalid-feedback">SharedKey is empty</span>
+                                    <span
+                                        *ngIf="!inputUserSharedKey.valid && inputUserSharedKey.touched && inputUserSharedKey.errors && !inputUserSharedKey.errors.required"
+                                        class="invalid-feedback">SharedKey is invalid</span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -129,10 +133,11 @@
                                         [(ngModel)]="currentClient.businessId" required pattern="^[a-zA-Z\s]*$"
                                         class="form-control" placeholder="Name">
                                     <span
-                                        *ngIf="!inputUserName.valid  && inputUserName.errors && (inputUserName.dirty || inputUserName.touched)"
-                                        class="badge badge-danger">Name
-                                        Business
-                                        is invalid or empty</span>
+                                        *ngIf="!inputUserName.valid  && inputUserName.touched && inputUserName.errors && inputUserName.errors.required"
+                                        class="invalid-feedback">Name Business is empty</span>
+                                    <span
+                                        *ngIf="!inputUserName.valid  && inputUserName.touched && inputUserName.errors && !inputUserName.errors.required"
+                                        class="invalid-feedback">Name Business is invalid</span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -142,9 +147,11 @@
                                         #inputPhoneNumber="ngModel" [(ngModel)]="currentClient.phone" required
                                         pattern="[0-9]*" class="form-control" placeholder="Phone">
                                     <span
-                                        *ngIf="!inputPhoneNumber.valid  && inputPhoneNumber.errors && (inputPhoneNumber.dirty || inputPhoneNumber.touched)"
-                                        class="badge badge-danger">Phone is
-                                        invalid or empty</span>
+                                        *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched && inputPhoneNumber.errors && inputPhoneNumber.errors.required"
+                                        class="invalid-feedback">Phone is empty</span>
+                                    <span
+                                        *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched && inputPhoneNumber.errors && !inputPhoneNumber.errors.required"
+                                        class="invalid-feedback">Phone is invalid</span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -154,9 +161,11 @@
                                         [(ngModel)]="currentClient.email" class="form-control" required
                                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="E-mail">
                                     <span
-                                        *ngIf="!inputEmail.valid  && inputEmail.errors && (inputEmail.dirty || inputEmail.touched)"
-                                        class="badge badge-danger">E-mail is
-                                        invalid or empty</span>
+                                        *ngIf="!inputEmail.valid && inputEmail.touched && inputEmail.errors && inputEmail.errors.required"
+                                        class="invalid-feedback">E-mail is empty</span>
+                                    <span
+                                        *ngIf="!inputEmail.valid && inputEmail.touched && inputEmail.errors && !inputEmail.errors.required"
+                                        class="invalid-feedback">E-mail is invalid</span>
                                 </div>
                             </div>
                             <div class="modal-footer">
