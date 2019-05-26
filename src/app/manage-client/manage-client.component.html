@@ -110,30 +110,24 @@
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
-                        <form class="needs-validation" novalidate id="formClient" [formGroup]="formClient"
+                        <form class="needs-validation" novalidate id="formClient" #formClient="ngForm"
                             (ngSubmit)="onSubmitFormClient();">
-                            <div class="form-group row" [ngClass]="{
-                                'has-danger': inputUserSharedKey.invalid && (inputUserSharedKey.dirty || inputUserSharedKey.touched),
-                                'has-success': inputUserSharedKey.valid && (inputUserSharedKey.dirty || inputUserSharedKey.touched)
-                              }">
+                            <div class="form-group row">
                                 <label for="inputUserSharedKey" class="col-sm-3 col-form-label">Shared Key</label>
                                 <div class="col-sm-9">
                                     <input type="text" id="inputUserSharedKey" name="inputUserSharedKey"
-                                        formControlName="sharedKey" required class="form-control"
-                                        placeholder="Shared Key">
-                                    <span
-                                        *ngIf="inputUserSharedKey.errors && (inputUserSharedKey.dirty || inputUserSharedKey.touched)"
+                                        #inputUserSharedKey="ngModel" [(ngModel)]="currentClient.sharedKey" required
+                                        pattern="[a-z]+" class="form-control" placeholder="Shared Key">
+                                    <span *ngIf="!inputUserSharedKey.valid && inputUserSharedKey.touched"
                                         class="badge badge-danger">SharedKey is invalid or empty</span>
                                 </div>
                             </div>
-                            <div class="form-group row" [ngClass]="{
-                                'has-danger': inputUserName.invalid && (inputUserName.dirty || inputUserName.touched),
-                                'has-success': inputUserName.valid && (inputUserName.dirty || inputUserName.touched)
-                              }">
+                            <div class="form-group row">
                                 <label for="inputUserName" class="col-sm-3 col-form-label">Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="inputUserName" name="inputUserName"
-                                        formControlName="businessId" required class="form-control" placeholder="Name">
+                                    <input type="text" id="inputUserName" name="inputUserName" #inputUserName="ngModel"
+                                        [(ngModel)]="currentClient.businessId" required pattern="^[a-zA-Z\s]*$"
+                                        class="form-control" placeholder="Name">
                                     <span
                                         *ngIf="!inputUserName.valid  && inputUserName.errors && (inputUserName.dirty || inputUserName.touched)"
                                         class="badge badge-danger">Name
@@ -141,28 +135,24 @@
                                         is invalid or empty</span>
                                 </div>
                             </div>
-                            <div class="form-group row" [ngClass]="{
-                                'has-danger': inputPhoneNumber.invalid && (inputPhoneNumber.dirty || inputPhoneNumber.touched),
-                                'has-success': inputPhoneNumber.valid && (inputPhoneNumber.dirty || inputPhoneNumber.touched)
-                              }">
+                            <div class="form-group row">
                                 <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone</label>
                                 <div class="col-sm-9">
                                     <input type="text" id="inputPhoneNumber" name="inputPhoneNumber"
-                                        formControlName="phone" required class="form-control" placeholder="Phone">
+                                        #inputPhoneNumber="ngModel" [(ngModel)]="currentClient.phone" required
+                                        pattern="[0-9]*" class="form-control" placeholder="Phone">
                                     <span
                                         *ngIf="!inputPhoneNumber.valid  && inputPhoneNumber.errors && (inputPhoneNumber.dirty || inputPhoneNumber.touched)"
                                         class="badge badge-danger">Phone is
                                         invalid or empty</span>
                                 </div>
                             </div>
-                            <div class="form-group row" [ngClass]="{
-                                'has-danger': inputEmail.invalid && (inputEmail.dirty || inputEmail.touched),
-                                'has-success': inputEmail.valid && (inputEmail.dirty || inputEmail.touched)
-                              }">
+                            <div class="form-group row">
                                 <label for="inputEmail" class="col-sm-3 col-form-label">E-mail</label>
                                 <div class="col-sm-9">
-                                    <input type="email" id="inputEmail" name="inputEmail" formControlName="email"
-                                        class="form-control" required placeholder="E-mail">
+                                    <input type="email" id="inputEmail" name="inputEmail" #inputEmail="ngModel"
+                                        [(ngModel)]="currentClient.email" class="form-control" required
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="E-mail">
                                     <span
                                         *ngIf="!inputEmail.valid  && inputEmail.errors && (inputEmail.dirty || inputEmail.touched)"
                                         class="badge badge-danger">E-mail is
@@ -171,11 +161,11 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" id="btnCloseClientModal" class="btn btn-secondary"
-                                    data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" [disabled]="!formClient.valid">Save
+                                    data-dismiss="modal" (click)="formClient.reset();">Close</button>
+                                <button type="submit" class="btn btn-primary" [disabled]="!formClient.form.valid">Save
                                     changes</button>
                             </div>
-                            <!--pre>{{formClient.value | json}}</pre-->
+                            <!--pre>{{currentClient | json}}</pre-->
                         </form>
                     </div>
                 </div>
