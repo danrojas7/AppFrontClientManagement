@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ClientManagementService } from '../services/client-management.service';
 import { Client } from '../model/Client';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-client',
@@ -8,6 +9,12 @@ import { Client } from '../model/Client';
   styleUrls: ['./manage-client.component.css']
 })
 export class ManageClientComponent implements OnInit {
+
+  private formClient: FormGroup;
+  private inputUserSharedKey: FormControl;
+  private inputUserName: FormControl;
+  private inputPhoneNumber: FormControl;
+  private inputEmail: FormControl;
 
   private _lstClients: Array<Client>;
   public get lstClients(): Array<Client> {
@@ -33,14 +40,6 @@ export class ManageClientComponent implements OnInit {
     this._addingClient = value;
   }
 
-  private _showNotificationModal: boolean;
-  public get showNotificationModal(): boolean {
-    return this._showNotificationModal;
-  }
-  public set showNotificationModal(value: boolean) {
-    this._showNotificationModal = value;
-  }
-
   private _titleNotification: string;
   public get titleNotification(): string {
     return this._titleNotification;
@@ -60,17 +59,57 @@ export class ManageClientComponent implements OnInit {
   constructor(
     private clientManagementService: ClientManagementService
   ) {
-    this.currentClient = new Client('', '', '', '', '');
+    this.currentClient = new Client(null, null, null, null, null);
     this.addingClient = false;
   }
 
   ngOnInit() {
     this.getAllClients();
+    this.createClientFormControls();
+    this.createClientForm();
+  }
+
+  createClientFormControls() {
+    this.inputUserSharedKey = new FormControl(
+      '', [
+        Validators.required,
+        Validators.pattern(/[a-z]+/)
+      ]
+    );
+    this.inputUserName = new FormControl(
+      '', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z\s]*$/)
+      ]
+    );
+    this.inputPhoneNumber = new FormControl(
+      '', [
+        Validators.pattern(/[0-9]*/),
+        Validators.required
+      ]
+    );
+    this.inputEmail = new FormControl(
+      '', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+      ]
+    );
+  }
+
+  createClientForm() {
+    this.formClient = new FormGroup({
+      sharedKey: this.inputUserSharedKey,
+      businessId: this.inputUserName,
+      phone: this.inputPhoneNumber,
+      email: this.inputEmail
+    });
   }
 
   actionAddingClient() {
     this.addingClient = true;
+    this.formClient.reset();
     this.cleanCurrentClient();
+    document.getElementById('btnOpenClientModal').click();
   }
 
   actionModifyingClient(sharedKey: string) {
@@ -82,7 +121,9 @@ export class ManageClientComponent implements OnInit {
     });
 
     if (lstClientFound.length > 0) {
-      this.currentClient = lstClientFound[0];
+      this.currentClient = JSON.parse(JSON.stringify(lstClientFound[0]));
+      this.formClient.patchValue(this.currentClient);
+      document.getElementById('btnOpenClientModal').click();
     }
   }
 
@@ -99,42 +140,37 @@ export class ManageClientComponent implements OnInit {
   }
 
   cleanCurrentClient() {
-    this.currentClient = new Client('', '', '', '', '');
+    this.currentClient = new Client(null, null, null, null, null);
   }
 
   onSubmitFormClient() {
-    if (this.addingClient) {
-      this.clientManagementService.addClient(this.currentClient).subscribe((result: any) => {
+    if (this.formClient.valid) {
+      this.currentClient = <Client>this.formClient.value;
+      let hdrUpdatingClient: string = 'Update client status';
+      let hdrErrorAddingClient: string = 'Error while updating client';
+
+      if (this.addingClient) {
+        hdrUpdatingClient = 'Add client status';
+        hdrErrorAddingClient = 'Error while adding client';
+      } else {
+        hdrUpdatingClient = 'Update client status';
+        hdrErrorAddingClient = 'Error while updating client';
+      }
+
+      this.clientManagementService.updateClient(this.addingClient, this.currentClient).subscribe((result: any) => {
         if (result.status === 0) {
           document.getElementById('btnCloseClientModal').click();
-          this.funcShowNotificationModal('Add client status', [result.description]);
+          this.funcShowNotificationModal(hdrUpdatingClient, [result.description]);
           this.getAllClients();
         } else {
-          this.funcShowNotificationModal('Error while adding client', [result.description]);
+          this.funcShowNotificationModal(hdrErrorAddingClient, [result.description]);
         }
       }, (error: any) => {
         console.log(error);
         if (error.error.status === 1) {
-          this.funcShowNotificationModal('Error while adding client', [error.error.description]);
+          this.funcShowNotificationModal(hdrErrorAddingClient, [error.error.description]);
         } else {
-          this.funcShowNotificationModal('Error while adding client', this.getFormErrors(error.error));
-        }
-      });
-    } else {
-      this.clientManagementService.modifyClient(this.currentClient).subscribe((result: any) => {
-        if (result.status === 0) {
-          document.getElementById('btnCloseClientModal').click();
-          this.funcShowNotificationModal('Update client status', [result.description]);
-          this.getAllClients();
-        } else {
-          this.funcShowNotificationModal('Error while updating client', [result.description]);
-        }
-      }, (error: any) => {
-        console.log(error);
-        if (error.error.status === 1) {
-          this.funcShowNotificationModal('Error while updating client', [error.error.description]);
-        } else {
-          this.funcShowNotificationModal('Error while updating client', this.getFormErrors(error.error));
+          this.funcShowNotificationModal(hdrErrorAddingClient, this.getFormErrors(error.error));
         }
       });
     }
@@ -150,14 +186,9 @@ export class ManageClientComponent implements OnInit {
   }
 
   funcShowNotificationModal(title: string, description: Array<any>) {
-    this.showNotificationModal = true;
     this.titleNotification = title;
     this.descriptionNotification = description;
     document.getElementById('btnOpenNotModal').click();
-  }
-
-  funcHideNotificationModal() {
-    this.showNotificationModal = false;
   }
 
 }
