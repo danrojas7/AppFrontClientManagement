@@ -15,15 +15,16 @@
                             <div class="d-flex flex-wrap justify-content-xl-between">
                                 <div
                                     class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                    <button type="button" class="btn btn-primary btn-fw" data-toggle="modal"
-                                        data-target="#clientModal" (click)="formClient.reset(); actionAddingClient();">
+                                    <button type="button" class="btn btn-primary btn-fw"
+                                        (click)="formClient.reset(); actionAddingClient();">
                                         <i class="mdi mdi-account-plus icon-md mr-3 text-light"></i>
                                         New Client
                                     </button>
                                 </div>
                                 <div
                                     class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                    <button type="button" class="btn btn-primary btn-fw">
+                                    <button type="button" class="btn btn-primary btn-fw"
+                                        (click)="funcShowExportModal();">
                                         <i class="mdi mdi-file-export icon-md mr-3 text-light"></i>
                                         Export
                                     </button>
@@ -80,7 +81,7 @@
                                     <td class="text-left">{{client.businessId}}</td>
                                     <td class="text-left">{{client.email}}</td>
                                     <td class="text-right">{{client.phone}}</td>
-                                    <td class="text-right">{{client.addedDate | date:'dd/MM/yyyy hh:mm a'}}</td>
+                                    <td class="text-right">{{client.addedDate}}</td>
                                     <td class="text-center"><button type="button" class="btn btn-light btn-sm"
                                             (click)="actionModifyingClient(client.sharedKey)"><span
                                                 class=" mdi mdi-lead-pencil icon-md mr-1 text-primary"></span></button>
@@ -95,8 +96,8 @@
     </div>
 </div>
 
-<button type="button" id="btnOpenClientModal" data-toggle="modal" data-target="#clientModal" class="btn btn-primary"
-    class="invisible">Open Notification Modal</button>
+<button type="button" id="btnOpenClientModal" data-toggle="modal" data-target="#clientModal"
+    class="btn btn-primary invisible">Open Notification Modal</button>
 <div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="clientModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -141,20 +142,6 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone</label>
-                                <div class="col-sm-9">
-                                    <input type="text" id="inputPhoneNumber" name="inputPhoneNumber"
-                                        #inputPhoneNumber="ngModel" [(ngModel)]="currentClient.phone" required
-                                        pattern="[0-9]*" class="form-control" placeholder="Phone">
-                                    <span
-                                        *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched && inputPhoneNumber.errors && inputPhoneNumber.errors.required"
-                                        class="invalid-feedback">Phone is empty</span>
-                                    <span
-                                        *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched && inputPhoneNumber.errors && !inputPhoneNumber.errors.required"
-                                        class="invalid-feedback">Phone is invalid</span>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="inputEmail" class="col-sm-3 col-form-label">E-mail</label>
                                 <div class="col-sm-9">
                                     <input type="email" id="inputEmail" name="inputEmail" #inputEmail="ngModel"
@@ -166,6 +153,20 @@
                                     <span
                                         *ngIf="!inputEmail.valid && inputEmail.touched && inputEmail.errors && !inputEmail.errors.required"
                                         class="invalid-feedback">E-mail is invalid</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPhoneNumber" class="col-sm-3 col-form-label">Phone</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="inputPhoneNumber" name="inputPhoneNumber"
+                                        #inputPhoneNumber="ngModel" [(ngModel)]="currentClient.phone" required
+                                        pattern="[0-9]*" class="form-control" placeholder="Phone">
+                                    <span
+                                        *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched && inputPhoneNumber.errors && inputPhoneNumber.errors.required"
+                                        class="invalid-feedback">Phone is empty</span>
+                                    <span
+                                        *ngIf="!inputPhoneNumber.valid && inputPhoneNumber.touched && inputPhoneNumber.errors && !inputPhoneNumber.errors.required"
+                                        class="invalid-feedback">Phone is invalid</span>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -183,8 +184,49 @@
     </div>
 </div>
 
-<button type="button" id="btnOpenNotModal" data-toggle="modal" data-target="#notificationModal" class="btn btn-primary"
-    class="invisible">Open Notification Modal</button>
+<button type="button" id="btnOpenExportModal" data-toggle="modal" data-target="#exportModal"
+    (click)="formExport.reset();" class="btn btn-primary invisible">Open Export Modal</button>
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exportModalLabel">Export to file</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="needs-validation was-validated" novalidate id="formExport" #formExport="ngForm"
+                    (ngSubmit)="onSubmitFormExport();">
+                    <div class="form-group row">
+                        <label for="selectFileType" class="col-sm-3 col-form-label">File type</label>
+                        <div class="col-sm-9">
+                            <select id="selectFileType" name="selectFileType" #selectFileType="ngModel"
+                                [(ngModel)]="fileType" class="form-control custom-select" required>
+                                <option selected>Choose...</option>
+                                <option value="xls">Microsoft Office Excel 2003 (xls)</option>
+                                <option value="xlsx">Microsoft Office Excel 2007 (xlsx)</option>
+                                <option value="csv">Comma separated value (csv)</option>
+                            </select>
+                            <span *ngIf="!inputUserSharedKey.valid && inputUserSharedKey.touched"
+                                class="invalid-feedback">File Type is required</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCloseExportModal" class="btn btn-secondary"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="!formExport.form.valid">Export</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" id="btnOpenNotModal" data-toggle="modal" data-target="#notificationModal"
+    class="btn btn-primary invisible">Open Notification Modal</button>
 <div id="notificationModal" #notificationModal class="modal modal-notification" data-target="#modal" tabindex="-1"
     role="dialog">
     <div class="modal-dialog" role="document">
@@ -199,8 +241,8 @@
                 <p *ngFor="let descrNot of descriptionNotification">{{descrNot}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnCloseNotModal" class="btn btn-secondary" data-dismiss="modal"
-                    (click)="funcHideNotificationModal();">Close</button>
+                <button type="button" id="btnCloseNotModal" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -49,10 +49,18 @@ export class ManageClientComponent implements OnInit {
     this._descriptionNotification = value;
   }
 
+  private _fileType: string;
+  public get fileType(): string {
+    return this._fileType;
+  }
+  public set fileType(value: string) {
+    this._fileType = value;
+  }
+
   constructor(
     private clientManagementService: ClientManagementService
   ) {
-    this.currentClient = new Client(null, null, null, null, null);
+    this.cleanCurrentClient();
     this.addingClient = false;
   }
 
@@ -139,6 +147,16 @@ export class ManageClientComponent implements OnInit {
     this.titleNotification = title;
     this.descriptionNotification = description;
     document.getElementById('btnOpenNotModal').click();
+  }
+
+  funcShowExportModal() {
+    document.getElementById('btnOpenExportModal').click();
+  }
+
+  onSubmitFormExport() {
+    this.clientManagementService.getExportFileClients(this.fileType);
+    document.getElementById('btnCloseExportModal').click();
+    this.fileType = '';
   }
 
 }
