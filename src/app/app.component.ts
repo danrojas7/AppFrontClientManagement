@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TitleChangeService } from './services/title-change.service';
 
 @Component({
   selector: 'app-root',
@@ -6,16 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   private _title: string;
-  public get title() {
-    return this._title;
-  }
-  public set title(value) {
-    this._title = value;
+  public get title() { return this._title; }
+  public set title(value) { this._title = value; }
+
+  constructor(
+    private titleChangeService: TitleChangeService
+  ) {
+    this.title = 'Clients';
   }
 
-  constructor() {
-    this.title = 'Front para la administración de clientes';
+  ngOnInit() {
+    this.titleChangeService.currentTitle.subscribe((title: string) => this.title = title);
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientManagementService } from '../services/client-management.service';
 import { Client } from '../model/Client';
+import { TitleChangeService } from '../services/title-change.service';
 
 @Component({
   selector: 'app-manage-client',
@@ -58,13 +59,15 @@ export class ManageClientComponent implements OnInit {
   }
 
   constructor(
-    private clientManagementService: ClientManagementService
+    private clientManagementService: ClientManagementService,
+    private titleChangeService: TitleChangeService
   ) {
     this.cleanCurrentClient();
     this.addingClient = false;
   }
 
   ngOnInit() {
+    this.changeTitle();
     this.getAllClients();
   }
 
@@ -157,6 +160,10 @@ export class ManageClientComponent implements OnInit {
     this.clientManagementService.getExportFileClients(this.fileType);
     document.getElementById('btnCloseExportModal').click();
     this.fileType = '';
+  }
+
+  changeTitle() {
+    this.titleChangeService.changeTitle('Clients');
   }
 
 }
