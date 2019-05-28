@@ -52,6 +52,72 @@
                                         <button class="btn btn-sm btn-primary" type="button">Search</button>
                                     </div>
                                 </div>
+                                <!--div class="invisible">
+                                    <form class="needs-validation was-validated" novalidate id="formFilterClients"
+                                        #formFilterClients="ngForm" (ngSubmit)="onSubmitFormFilterClients();">
+                                        <div class="form-group row">
+                                            <label for="inputFUserName" class="col-sm-3 col-form-label">Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="inputFUserName" name="inputFUserName"
+                                                    pattern="^[a-zA-Z\s]*$" class="form-control" placeholder="Name">
+                                                <span
+                                                    *ngIf="!inputFUserName.valid  && inputFUserName.touched && inputFUserName.errors"
+                                                    class="invalid-feedback">Name Business is invalid</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputFPhoneNumber" class="col-sm-3 col-form-label">Phone</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="inputFPhoneNumber" name="inputFPhoneNumber"
+                                                    pattern="[0-9]*" class="form-control" placeholder="Phone">
+                                                <span
+                                                    *ngIf="!inputFPhoneNumber.valid && inputFPhoneNumber.touched && inputFPhoneNumber.errors"
+                                                    class="invalid-feedback">Phone is invalid</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputFEmail" class="col-sm-3 col-form-label">E-mail</label>
+                                            <div class="col-sm-9">
+                                                <input type="email" id="inputFEmail" name="inputFEmail"
+                                                    class="form-control"
+                                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                                    placeholder="E-mail">
+                                                <span
+                                                    *ngIf="!inputFEmail.valid && inputFEmail.touched && inputFEmail.errors && !inputFEmail.errors.required"
+                                                    class="invalid-feedback">E-mail is invalid</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="inputFStartDate" class="col-sm-3 col-form-label">Start
+                                                Dtae</label>
+                                            <div class="col-sm-9">
+                                                <input type="email" id="inputFStartDate" name="inputFStartDate"
+                                                    class="form-control" placeholder="E-mail">
+                                                <span
+                                                    *ngIf="!inputFStartDate.valid && inputFStartDate.touched && inputFStartDate.errors && !inputFStartDate.errors.required"
+                                                    class="invalid-feedback">E-mail is invalid</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputFEndDate" class="col-sm-3 col-form-label">End Date</label>
+                                            <div class="col-sm-9">
+                                                <input type="email" id="inputFEndDate" name="inputFEndDate"
+                                                    class="form-control" placeholder="E-mail">
+                                                <span
+                                                    *ngIf="!inputFEndDate.valid && inputFEndDate.touched && inputFEndDate.errors && !inputFEndDate.errors.required"
+                                                    class="invalid-feedback">E-mail is invalid</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" id="btnCloseClientModal" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                [disabled]="!formFilterClients.form.valid">OK</button>
+                                        </div>
+                                    </form>
+                                </div-->
                             </div>
                             <div class="col-md-5 d-flex border-md-right flex-grow-1 align-items-center item">
                                 <button type="button" class="btn btn-primary btn-fw"><i

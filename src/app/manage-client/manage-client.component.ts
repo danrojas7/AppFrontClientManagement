@@ -166,4 +166,8 @@ export class ManageClientComponent implements OnInit {
     this.titleChangeService.changeTitle('Clients');
   }
 
+  onSubmitFormFilterClients() {
+
+  }
+
 }
