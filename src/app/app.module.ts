@@ -8,7 +8,7 @@ import { ManageClientComponent } from './manage-client/manage-client.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { ErrorComponent } from './error/error.component';
-import { APP_ROUTING } from './app.routing';
+import { APP_ROUTING } from './app-routing.module';
 
 @NgModule({
   declarations: [

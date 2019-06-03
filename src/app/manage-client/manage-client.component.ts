@@ -27,6 +27,14 @@ export class ManageClientComponent implements OnInit {
     this._currentClient = value;
   }
 
+  private _currentFilterClient: Client;
+  public get currentFilterClient(): Client {
+    return this._currentFilterClient;
+  }
+  public set currentFilterClient(value: Client) {
+    this._currentFilterClient = value;
+  }
+
   private _addingClient: boolean;
   public get addingClient(): boolean {
     return this._addingClient;
@@ -72,6 +80,7 @@ export class ManageClientComponent implements OnInit {
     private titleChangeService: TitleChangeService
   ) {
     this.cleanCurrentClient();
+    this.currentFilterClient = new Client(null, null, null, null, null, null);
     this.addingClient = false;
     this.showFilter = false;
   }
@@ -181,18 +190,18 @@ export class ManageClientComponent implements OnInit {
     let startDate: any;
     let endDate: any;
 
-    startDate = moment(this.currentClient.addedDate, 'YYYY-MM-DD', true);
-    endDate = moment(this.currentClient.lastModifiedDate, 'YYYY-MM-DD', true).add(1, 'days');
+    startDate = moment(this.currentFilterClient.addedDate, 'YYYY-MM-DD', true);
+    endDate = moment(this.currentFilterClient.lastModifiedDate, 'YYYY-MM-DD', true).add(1, 'days');
 
     if ((startDate.isValid() && !endDate.isValid()) || (!startDate.isValid() && endDate.isValid())) {
       this.funcShowNotificationModal('Error validating dates', ['Start and End Date should be both filled or empty']);
       return;
     }
 
-    filterCriteriaClient = new Client(this.currentClient.sharedKey,
-      this.currentClient.businessId,
-      this.currentClient.email,
-      this.currentClient.phone,
+    filterCriteriaClient = new Client(this.currentFilterClient.sharedKey,
+      this.currentFilterClient.businessId,
+      this.currentFilterClient.email,
+      this.currentFilterClient.phone,
       (startDate.isValid() ? startDate.format() : null),
       (endDate.isValid() ? endDate.format() : null)
     );
@@ -210,12 +219,12 @@ export class ManageClientComponent implements OnInit {
   }
 
   showCriteriaClientsFilters() {
-    this.currentClient = new Client(this.currentClient.sharedKey, null, null, null, null, null);
+    this.currentFilterClient = new Client(this.currentFilterClient.sharedKey, null, null, null, null, null);
     this.showFilter = true;
   }
 
   hideCriteriaClientsFilters() {
-    this.currentClient = new Client(this.currentClient.sharedKey, null, null, null, null, null);
+    this.currentFilterClient = new Client(this.currentFilterClient.sharedKey, null, null, null, null, null);
     this.showFilter = false;
   }
 

@@ -53,7 +53,7 @@
                                                 Key</label>
                                             <div class="input-group mb-3 col-sm-9">
                                                 <input type="text" id="inputFSharedKey" name="inputFSharedKey"
-                                                    #inputFSharedKey="ngModel" [(ngModel)]="currentClient.sharedKey"
+                                                    #inputFSharedKey="ngModel" [(ngModel)]="currentFilterClient.sharedKey"
                                                     pattern="[a-z]+" class="form-control"
                                                     placeholder="Enter shared key">
                                                 <div *ngIf="!showFilter" class="input-group-append">
@@ -70,7 +70,7 @@
                                             <label for="inputFUserName" class="col-sm-3 col-form-label">Name</label>
                                             <div class="col-sm-9">
                                                 <input type="text" id="inputFUserName" name="inputFUserName"
-                                                    #inputFUserName="ngModel" [(ngModel)]="currentClient.businessId"
+                                                    #inputFUserName="ngModel" [(ngModel)]="currentFilterClient.businessId"
                                                     pattern="^[a-zA-Z\s]*$" class="form-control" placeholder="Name">
                                                 <span
                                                     *ngIf="!inputFUserName.valid && inputFUserName.touched && inputFUserName.errors"
@@ -81,7 +81,7 @@
                                             <label for="inputFPhoneNumber" class="col-sm-3 col-form-label">Phone</label>
                                             <div class="col-sm-9">
                                                 <input type="text" id="inputFPhoneNumber" name="inputFPhoneNumber"
-                                                    #inputFPhoneNumber="ngModel" [(ngModel)]="currentClient.phone"
+                                                    #inputFPhoneNumber="ngModel" [(ngModel)]="currentFilterClient.phone"
                                                     pattern="[0-9]*" class="form-control" placeholder="Phone">
                                                 <span
                                                     *ngIf="!inputFPhoneNumber.valid && inputFPhoneNumber.touched && inputFPhoneNumber.errors"
@@ -92,7 +92,7 @@
                                             <label for="inputFEmail" class="col-sm-3 col-form-label">E-mail</label>
                                             <div class="col-sm-9">
                                                 <input type="text" id="inputFEmail" name="inputFEmail"
-                                                    #inputFEmail="ngModel" [(ngModel)]="currentClient.email"
+                                                    #inputFEmail="ngModel" [(ngModel)]="currentFilterClient.email"
                                                     class="form-control" placeholder="E-mail">
                                                 <span
                                                     *ngIf="!inputFEmail.valid && inputFEmail.touched && inputFEmail.errors && !inputFEmail.errors.required"
@@ -107,7 +107,7 @@
                                                 <label for="inputFStartDate">Start
                                                     Date</label>
                                                 <input type="date" id="inputFStartDate" name="inputFStartDate"
-                                                    #inputFStartDate="ngModel" [(ngModel)]="currentClient.addedDate"
+                                                    #inputFStartDate="ngModel" [(ngModel)]="currentFilterClient.addedDate"
                                                     class="form-control" placeholder="Start Date">
                                                 <span
                                                     *ngIf="!inputFStartDate.valid && inputFStartDate.touched && inputFStartDate.errors && !inputFStartDate.errors.required"
@@ -118,7 +118,7 @@
                                                 <label for="inputFEndDate">End Date</label>
                                                 <input type="date" id="inputFEndDate" name="inputFEndDate"
                                                     #inputFEndDate="ngModel"
-                                                    [(ngModel)]="currentClient.lastModifiedDate" class="form-control"
+                                                    [(ngModel)]="currentFilterClient.lastModifiedDate" class="form-control"
                                                     placeholder="End Date">
                                                 <span
                                                     *ngIf="!inputFEndDate.valid && inputFEndDate.touched && inputFEndDate.errors && !inputFEndDate.errors.required"

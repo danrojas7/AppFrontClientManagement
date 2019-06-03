@@ -4,7 +4,7 @@ import { TitleChangeService } from './services/title-change.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
@@ -21,5 +21,4 @@ export class AppComponent {
   ngOnInit() {
     this.titleChangeService.currentTitle.subscribe((title: string) => this.title = title);
   }
-
 }
