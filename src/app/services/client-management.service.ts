@@ -51,4 +51,8 @@ export class ClientManagementService {
     window.open(this.urlServicioClientManagement + '/getFile/' + fileType, '_blank');
   }
 
+  searchClientsByCriteria(client: Client): Observable<any> {
+    return this._http.post(this.urlServicioClientManagement + '/searchClientsByCriteria', client);
+  }
+
 }

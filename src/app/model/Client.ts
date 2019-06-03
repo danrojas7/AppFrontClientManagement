@@ -5,7 +5,8 @@ export class Client {
         public businessId: string,
         public email: string,
         public phone: string,
-        public addedDate: string
+        public addedDate: string,
+        public lastModifiedDate: string
     ) {
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientManagementService } from '../services/client-management.service';
 import { Client } from '../model/Client';
 import { TitleChangeService } from '../services/title-change.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-manage-client',
@@ -58,12 +59,21 @@ export class ManageClientComponent implements OnInit {
     this._fileType = value;
   }
 
+  private _showFilter: boolean;
+  public get showFilter(): boolean {
+    return this._showFilter;
+  }
+  public set showFilter(value: boolean) {
+    this._showFilter = value;
+  }
+
   constructor(
     private clientManagementService: ClientManagementService,
     private titleChangeService: TitleChangeService
   ) {
     this.cleanCurrentClient();
     this.addingClient = false;
+    this.showFilter = false;
   }
 
   ngOnInit() {
@@ -104,7 +114,7 @@ export class ManageClientComponent implements OnInit {
   }
 
   cleanCurrentClient() {
-    this.currentClient = new Client(null, null, null, null, null);
+    this.currentClient = new Client(null, null, null, null, null, null);
   }
 
   onSubmitFormClient() {
@@ -167,7 +177,46 @@ export class ManageClientComponent implements OnInit {
   }
 
   onSubmitFormFilterClients() {
+    let filterCriteriaClient: Client = null;
+    let startDate: any;
+    let endDate: any;
 
+    startDate = moment(this.currentClient.addedDate, 'YYYY-MM-DD', true);
+    endDate = moment(this.currentClient.lastModifiedDate, 'YYYY-MM-DD', true).add(1, 'days');
+
+    if ((startDate.isValid() && !endDate.isValid()) || (!startDate.isValid() && endDate.isValid())) {
+      this.funcShowNotificationModal('Error validating dates', ['Start and End Date should be both filled or empty']);
+      return;
+    }
+
+    filterCriteriaClient = new Client(this.currentClient.sharedKey,
+      this.currentClient.businessId,
+      this.currentClient.email,
+      this.currentClient.phone,
+      (startDate.isValid() ? startDate.format() : null),
+      (endDate.isValid() ? endDate.format() : null)
+    );
+
+    this.clientManagementService.searchClientsByCriteria(filterCriteriaClient).subscribe((result: any) => {
+      if (result.status === 0) {
+        this.lstClients = result.information;
+      } else {
+        this.funcShowNotificationModal('Error while filter clients', ['An unexpected error has occurred while filtering clients by criteria sent']);
+      }
+    }, (error: any) => {
+      console.error(error);
+      this.funcShowNotificationModal('Error while filter clients', ['An unexpected error has occurred while filtering clients by criteria sent']);
+    });
+  }
+
+  showCriteriaClientsFilters() {
+    this.currentClient = new Client(this.currentClient.sharedKey, null, null, null, null, null);
+    this.showFilter = true;
+  }
+
+  hideCriteriaClientsFilters() {
+    this.currentClient = new Client(this.currentClient.sharedKey, null, null, null, null, null);
+    this.showFilter = false;
   }
 
 }
