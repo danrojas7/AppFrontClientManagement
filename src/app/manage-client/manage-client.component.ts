@@ -7,7 +7,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-manage-client',
   templateUrl: './manage-client.component.html',
-  styleUrls: ['./manage-client.component.css']
+  styleUrls: ['./manage-client.component.scss']
 })
 export class ManageClientComponent implements OnInit {
 
