@@ -19,6 +19,14 @@ export class ManageClientComponent implements OnInit {
     this._lstClients = value;
   }
 
+  private _currentSharedKey: string;
+  public get currentSharedKey(): string {
+    return this._currentSharedKey;
+  }
+  public set currentSharedKey(value: string) {
+    this._currentSharedKey = value;
+  }
+
   private _currentClient: Client;
   public get currentClient(): Client {
     return this._currentClient;
@@ -99,6 +107,7 @@ export class ManageClientComponent implements OnInit {
   actionModifyingClient(sharedKey: string) {
     this.addingClient = false;
 
+    this.currentSharedKey = sharedKey;
     let lstClientFound: Array<Client>;
     lstClientFound = this.lstClients.filter((element: Client) => {
       return element.sharedKey === sharedKey;
@@ -138,7 +147,7 @@ export class ManageClientComponent implements OnInit {
       hdrErrorAddingClient = 'Error while updating client';
     }
 
-    this.clientManagementService.updateClient(this.addingClient, this.currentClient).subscribe((result: any) => {
+    this.clientManagementService.updateClient(this.addingClient, this.currentSharedKey, this.currentClient).subscribe((result: any) => {
       if (result.status === 0) {
         document.getElementById('btnCloseClientModal').click();
         this.funcShowNotificationModal(hdrUpdatingClient, [result.description]);
@@ -198,7 +207,8 @@ export class ManageClientComponent implements OnInit {
       return;
     }
 
-    filterCriteriaClient = new Client(this.currentFilterClient.sharedKey,
+    filterCriteriaClient = new Client(
+      this.currentFilterClient.sharedKey,
       this.currentFilterClient.businessId,
       this.currentFilterClient.email,
       this.currentFilterClient.phone,

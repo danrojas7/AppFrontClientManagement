@@ -27,15 +27,15 @@ export class ClientManagementService {
     return this._http.post(this.urlServicioClientManagement, client);
   }
 
-  modifyClient(client: Client): Observable<any> {
-    return this._http.post(this.urlServicioClientManagement + '/' + client.sharedKey, client);
+  modifyClient(sharedKey: string, client: Client): Observable<any> {
+    return this._http.post(this.urlServicioClientManagement + '/' + sharedKey, client);
   }
 
-  updateClient(addingClient: boolean, client: Client): Observable<any> {
+  updateClient(addingClient: boolean, sharedKey: string, client: Client): Observable<any> {
     if (addingClient) {
       return this.addClient(client);
     } else {
-      return this.modifyClient(client);
+      return this.modifyClient(sharedKey, client);
     }
   }
 
