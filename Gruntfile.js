@@ -8,12 +8,12 @@ module.exports = function(grunt) {
         options: {
           war_dist_folder: "./", /* Folder where to generate the WAR. */
           war_name:
-            "AppFrontClientManagement.war" /* The name fo the WAR file (.war will be the extension) */
+            "app.war" /* The name fo the WAR file (.war will be the extension) */
         },
         files: [
           {
             expand: true,
-            cwd: "dist/AppFrontClientManagement",
+            cwd: "dist",
             src: ["**"],
             dest: ""
           }
