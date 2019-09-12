@@ -20,6 +20,12 @@ RUN grunt war
 
 FROM tomcat:8.5.5-jre8
 
+RUN apk update && apk add vim && apk add curl && \
+    apk add bash
+
+RUN apk add tzdata && cp /usr/share/zoneinfo/America/Bogota /etc/localtime && echo "America/Bogota" > /etc/timezone
+    apk del tzdata
+
 COPY conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 COPY conf/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
