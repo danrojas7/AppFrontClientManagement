@@ -24,7 +24,7 @@ RUN cp /usr/share/zoneinfo/America/Bogota /etc/localtime && echo "America/Bogota
 COPY conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 COPY conf/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
-COPY --from=build-stage /opt/app/build/app.war /usr/local/tomcat/webapps/
+COPY --from=build-stage /opt/app/build/*.war /usr/local/tomcat/webapps/
 
 EXPOSE 8080
 

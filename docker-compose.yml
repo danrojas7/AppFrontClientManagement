@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+        frontend:
+                container_name: 'appclientadminfront'
+                image: 'danrojas7/appclientadminfront:1.0.0'
+                ports:
+                        - '8080:8080'
+                links:
+                        - 'backend'
+        backend:
+                container_name: 'wsrestclientadmin'
+                image: 'danrojas7/wsrestclientadmin:0.0.1'
+                ports:
+                        - '8081:8081'
+#volumes:
+#        mysql-data:
