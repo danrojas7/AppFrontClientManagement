@@ -4,14 +4,45 @@ services:
         frontend:
                 container_name: 'appclientadminfront'
                 image: 'danrojas7/appclientadminfront:1.0.0'
+                restart: 'always'
                 ports:
                         - '8080:8080'
                 links:
                         - 'backend'
+                environment:
+                        - TZ=America/Bogota
         backend:
                 container_name: 'wsrestclientadmin'
                 image: 'danrojas7/wsrestclientadmin:0.0.1'
+                restart: 'always'
                 ports:
                         - '8081:8081'
-#volumes:
-#        mysql-data:
+                links:
+                        - 'mongo'
+                environment:
+                        - TZ=America/Bogota
+        mongo:
+                container_name: 'mongodb'
+                image: 'mongo'
+                restart: 'always'
+                environment:
+                        - MONGO_INITDB_DATABASE=alianza
+                        - MONGO_INITDB_ROOT_USERNAME=root
+                        - MONGO_INITDB_ROOT_PASSWORD=test
+                        - MONGO_INITDB_USERNAME=alianza
+                        - MONGO_INITDB_PASSWORD=alianza123
+                volumes:
+                        - mongodb-data:/data/db
+        mongo-express:
+                container_name: 'mongo-express'
+                image: 'mongo-express'
+                restart: 'always'
+                ports:
+                        - '8082:8081'
+                links:
+                        - 'mongo'
+                environment:
+                        - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+                        - ME_CONFIG_MONGODB_ADMINPASSWORD=test
+volumes:
+        mongodb-data:

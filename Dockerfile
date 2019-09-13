@@ -17,9 +17,7 @@ RUN npm run gen-war
 
 FROM tomcat:8.5.5-jre8
 
-RUN apt-get update && apt-get install vim
-
-RUN cp /usr/share/zoneinfo/America/Bogota /etc/localtime && echo "America/Bogota" > /etc/timezone
+#RUN apt-get update && apt-get install vim
 
 COPY conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 COPY conf/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
