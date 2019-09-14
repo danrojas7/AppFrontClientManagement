@@ -11,8 +11,8 @@ RUN npm install
 
 COPY ./ /opt/app/build/
 
-RUN npm run build-prod
-RUN npm run gen-war
+RUN npm run build
+RUN npm run grunt
 
 
 FROM tomcat:8.5.5-jre8

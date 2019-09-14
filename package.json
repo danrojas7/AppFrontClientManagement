@@ -4,12 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build-prod": "ng build --prod --output-path=./dist --baseHref=/AppFrontClientManagement/ --deployUrl=/AppFrontClientManagement/",
+    "build": "ng build --prod --output-path=./dist --baseHref=/AppFrontClientManagement/ --deployUrl=/AppFrontClientManagement/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "gen-war": "grunt war"
+    "grunt": "grunt war"
   },
   "private": true,
   "dependencies": {
