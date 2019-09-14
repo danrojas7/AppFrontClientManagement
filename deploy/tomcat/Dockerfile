@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build-stage
+FROM node:10.16.3-alpine as build-stage
 
 RUN apk update && apk add vim && apk add curl && \
     apk add bash
