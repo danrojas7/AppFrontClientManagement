@@ -19,6 +19,10 @@ FROM tomcat:8.5.5-jre8
 
 #RUN apt-get update && apt-get install vim
 
+RUN mkdir -p ~/conf/Catalina/localhost/
+
+COPY conf/server.xml /usr/local/tomcat/conf/server.xml
+COPY conf/rewrite.config ~/conf/Catalina/localhost/rewrite.config
 COPY conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 COPY conf/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
