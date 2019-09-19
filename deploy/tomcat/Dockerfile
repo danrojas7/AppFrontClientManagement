@@ -1,32 +1,32 @@
 FROM node:10.16.3-alpine as build-stage
 
-RUN apk update && apk add vim && apk add curl && \
-    apk add bash
+RUN apk update && apk add bash curl vim
 
 WORKDIR /opt/app/build
 
-COPY package*.json /opt/app/build/
+COPY package*.json ./ 
 
 RUN npm install
 
-COPY ./ /opt/app/build/
+COPY . . 
 
-RUN npm run build
-RUN npm run grunt
+RUN npm run build && npm run grunt
 
 
 FROM tomcat:8.5.5-jre8
 
 #RUN apt-get update && apt-get install vim
+
+WORKDIR /usr/local/tomcat
+
 RUN mkdir -p /usr/local/tomcat/conf/Catalina/localhost/
 
-COPY conf/server.xml /usr/local/tomcat/conf/server.xml
-COPY conf/rewrite.config /usr/local/tomcat/conf/Catalina/localhost/rewrite.config
-COPY conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
-COPY conf/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
+COPY conf/server.xml ./conf/server.xml
+COPY conf/rewrite.config ./conf/Catalina/localhost/rewrite.config
+COPY conf/tomcat-users.xml ./conf/tomcat-users.xml
+COPY conf/context.xml ./webapps/manager/META-INF/context.xml
 
-COPY --from=build-stage /opt/app/build/*.war /usr/local/tomcat/webapps/
+COPY --from=build-stage /opt/app/build/*.war ./webapps/
 
 EXPOSE 8080
 
-WORKDIR /usr/local/tomcat
