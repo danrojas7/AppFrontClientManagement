@@ -12,22 +12,17 @@ RUN npm install
 COPY ./ /opt/app/build/
 
 RUN npm run build
-RUN npm run grunt
 
 
-FROM tomcat:8.5.5-jre8
+FROM nginx:1.17.3-alpine
 
-#RUN apt-get update && apt-get install vim
-RUN mkdir -p ~/conf/Catalina/localhost/
+RUN apk update && apk add vim && apk add curl && \
+    apk add bash && apk add tzdata
 
-COPY conf/server.xml /usr/local/tomcat/conf/server.xml
-COPY conf/rewrite.config /root/conf/Catalina/localhost/rewrite.config
-COPY conf/tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
-COPY conf/context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
+ENV TZ=America/Bogota
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-COPY --from=build-stage /opt/app/build/*.war /usr/local/tomcat/webapps/
+COPY --from=build-stage /opt/app/build/dist /usr/share/nginx/html
+COPY --from=build-stage /nginx-custom.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080
-
-WORKDIR /usr/local/tomcat
-
