@@ -1,7 +1,5 @@
 FROM node:10.16.3-alpine as build-stage
 
-RUN apk update && apk add bash curl vim
-
 WORKDIR /opt/app/build
 
 COPY package*.json ./
@@ -15,7 +13,7 @@ RUN npm run build
 
 FROM nginx:1.17.3-alpine
 
-RUN apk update && apk add bash curl vim tzdata
+RUN apk update && apk add bash curl tzdata vim 
 
 ENV TZ=America/Bogota
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

@@ -1,7 +1,5 @@
 FROM node:10.16.3-alpine as build-stage
 
-RUN apk update && apk add bash curl vim
-
 WORKDIR /opt/app/build
 
 COPY package*.json ./ 
