@@ -23,14 +23,13 @@ services:
                         - TZ=America/Bogota
         mongo:
                 container_name: 'mongodb'
-                image: 'mongo'
+                image: 'bitnami/mongodb'
                 restart: 'always'
                 environment:
-                        - MONGO_INITDB_DATABASE=alianza
-                        - MONGO_INITDB_ROOT_USERNAME=root
-                        - MONGO_INITDB_ROOT_PASSWORD=test
-                        - MONGO_INITDB_USERNAME=alianza
-                        - MONGO_INITDB_PASSWORD=alianza123
+                        - MONGODB_DATABASE=alianza
+                        - MONGODB_ROOT_PASSWORD=test
+                        - MONGODB_USERNAME=alianza
+                        - MONGODB_PASSWORD=alianza123
                 volumes:
                         - mongodb-data:/data/db
         mongo-express:
