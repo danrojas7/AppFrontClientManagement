@@ -19,7 +19,7 @@ FROM tomcat:8.5.5-jre8
 
 WORKDIR /usr/local/tomcat
 
-RUN mkdir -p /usr/local/tomcat/conf/Catalina/localhost/
+RUN mkdir -p ./conf/Catalina/localhost/
 
 COPY conf/server.xml ./conf/server.xml
 COPY conf/rewrite.config ./conf/Catalina/localhost/rewrite.config
