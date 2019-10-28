@@ -4,6 +4,10 @@ services:
         frontend:
                 container_name: 'appclientadminfront'
                 image: 'danrojas7/appclientadminfront:1.0.0'
+                build:
+                        context: .
+                        args:
+                                - TZ=America/Bogota
                 restart: 'always'
                 ports:
                         - '8080:8080'
@@ -14,6 +18,12 @@ services:
         backend:
                 container_name: 'wsrestclientadmin'
                 image: 'danrojas7/wsrestclientadmin:0.0.1'
+                build:
+                        context: ../WsRestClientAdmin/
+                        args:
+                                - TZ=America/Bogota
+                                - JAR=WsRestClientAdmin-0.0.1-SNAPSHOT.jar
+                                - CONFIG_PATH=src/main/resources/application.properties
                 restart: 'always'
                 ports:
                         - '8081:8081'

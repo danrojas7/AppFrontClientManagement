@@ -15,7 +15,7 @@ FROM nginx:1.17.3-alpine
 
 RUN apk update && apk add bash curl tzdata vim 
 
-ENV TZ=America/Bogota
+ARG TZ=America/Bogota
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY --from=build-stage /opt/app/build/dist /usr/share/nginx/html
